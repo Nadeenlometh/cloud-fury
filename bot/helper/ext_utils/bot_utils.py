@@ -407,11 +407,19 @@ def pop_up_stats(update, context):
     stats = bot_sys_stats()
     query.answer(text=stats, show_alert=True)
 
+def get_cpu_bar_string():
+    completed = psutil.cpu_percent()
+    total = 100
+    p = 0 if total == 0 else round(completed * 100 / total)
+    p = min(max(p, 0), 100)
+    cFull = p // 8
+    p_str = '⬢' * cFull
+    p_str += '⬡' * (12 - cFull)
+    p_str = f"〘{p_str}〙"
+    return p_str
+
 def bot_sys_stats():
     currentTime = get_readable_time(time() - botStartTime)
-    with tqdm(total=100, position=0) as cpubar, tqdm(total=100, position=1) as rambar:
-            cpubar.n = psutil.cpu_percent()
-            rambar.n = psutil.virtual_memory().percent
     cpu = psutil.cpu_percent()
     mem = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
@@ -423,7 +431,7 @@ def bot_sys_stats():
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     stats = "Bot Statistics"
     stats += f"""
-f: {rambar.n}
+f: {get_cpu_bar_string}
 Bot Uptime: {currentTime}
 T-DN: {recv} | T-UP: {sent}
 CPU: {cpu}% | RAM: {mem}%
