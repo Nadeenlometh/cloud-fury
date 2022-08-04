@@ -433,12 +433,12 @@ def bot_sys_stats():
     recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     cpuUsage = cpu_percent(interval=1)
-    stats = f"<b>BOT SYSTEM STATS</b>"
+    stats = f"\n<b> BOT SYSTEM STATS </b>"
     stats += f"""
 CPU:  {progress_bar(cpuUsage)} {cpuUsage}%
 RAM: {progress_bar(mem_p)} {mem_p}%
 DISK: {progress_bar(disk)} {disk}%
-TOTAL: {disk_t}GB | FREE: {disk_f}GB
+T: {disk_t}GB | F: {disk_f}GB
 
 Working For: {currentTime}
 T-DL: {recv} | T-UL: {sent}
