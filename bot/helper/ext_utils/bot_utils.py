@@ -422,17 +422,13 @@ def bot_sys_stats():
     cpu = psutil.cpu_percent()
     mem = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
-    total, used, free = shutil.disk_usage(".")
-    total = get_readable_file_size(total)
-    used = get_readable_file_size(used)
-    free = get_readable_file_size(free)
     recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     stats = "Bot Statistics"
     stats += f"""
 Bot Uptime: {currentTime}
-CPU:   {get_stats_bar_string(cpu)}
-RAM:  {get_stats_bar_string(mem)}
+CPU:  {get_stats_bar_string(cpu)}
+RAM: {get_stats_bar_string(mem)}
 DISK: {get_stats_bar_string(disk)}
 T-DN: {recv} | T-UP: {sent}
 
