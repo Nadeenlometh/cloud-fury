@@ -56,7 +56,7 @@ def stats(update, context):
             f'<b>CPU</b>:  {progress_bar(cpuUsage)} {cpuUsage}%\n' \
             f'<b>RAM</b>: {progress_bar(mem_p)} {mem_p}%\n' \
             f'<b>DISK</b>: {progress_bar(disk)} {disk}%\n\n' \
-            f'<b>Updated:</b> <code>{last_commit}</code>\n'\
+            f'<b>Updated:</b> {last_commit}\n'\
             f'<b>I am Working For:</b> <code>{currentTime}</code>\n\n'\
             f'<b>Total Disk:</b> <code>{total}</code> [{disk}% In use]\n'\
             f'<b>Used:</b> <code>{used}</code> | <b>Free:</b> <code>{free}</code>\n'\
