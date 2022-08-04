@@ -409,7 +409,7 @@ def pop_up_stats(update, context):
 def get_cpu_bar_string():
     used = {psutil.cpu_percent()}
     total = 100
-    cFull = total // 12
+    cFull = used // 12
     p_str = '⬢' * cFull
     p_str += '⬡' * (8 - cFull)
     p_str = f"〘{p_str}〙"
