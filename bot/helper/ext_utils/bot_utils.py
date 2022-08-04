@@ -10,7 +10,6 @@ from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.button_build import ButtonMaker
 import shutil
 import psutil
-from tqdm import tqdm
 from psutil import virtual_memory, cpu_percent, disk_usage
 from telegram import InlineKeyboardMarkup
 from telegram.error import RetryAfter
