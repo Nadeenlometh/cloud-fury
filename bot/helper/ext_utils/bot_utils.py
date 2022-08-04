@@ -408,7 +408,18 @@ def pop_up_stats(update, context):
 
 def get_cpu_bar_string(psutil):
     used = psutil / 8
-    total = psutil / 8
+    total = 100 / 8
+    p = 0 if total == 0 else round(used * 100 / total)
+    p = min(max(p, 0), 100)
+    cFull = p // 8
+    p_str = '⬢' * cFull
+    p_str += '⬡' * (12 - cFull)
+    p_str = f"〘{p_str}〙"
+    return p_str
+
+def get_mem_bar_string(psutil):
+    used = psutil / 8
+    total = 100 / 8
     p = 0 if total == 0 else round(used * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
@@ -431,7 +442,7 @@ def bot_sys_stats():
     stats = "Bot Statistics"
     stats += f"""
 CPU: {get_cpu_bar_string(cpu)}
-RAM: {get_cpu_bar_string(mem)}
+RAM: {get_mem_bar_string(mem)}
 Bot Uptime: {currentTime}
 T-DN: {recv} | T-UP: {sent}
 Disk: {total} | Free: {free}
