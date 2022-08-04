@@ -125,9 +125,9 @@ def get_progress_bar_string(status):
     return p_str
 
 def progress_bar(percentage):
-    comp = '⬢'
-    ncomp = '⬡'
-    pr = ''
+    p_used = '⬢'
+    p_total = '⬡'
+    s_progress = ''
     if isinstance(percentage, str):
         return 'NaN'
     try:
@@ -136,10 +136,11 @@ def progress_bar(percentage):
         percentage = 0
     for i in range(1,11):
         if i <= int(percentage/10):
-            pr += comp
+            s_progress += p_used
         else:
-            pr += ncomp
-    return pr
+            s_progress += p_total
+        s_progress = f"〘{s_progress}〙"
+    return s_progress
 
 def auto_delete_message(bot, cmd_message: Message, bot_message: Message):
     if AUTO_DELETE_MESSAGE_DURATION != -1:
@@ -430,23 +431,17 @@ def bot_sys_stats():
     disk_f = get_readable_file_size(free)
     memory = virtual_memory()
     mem_p = memory.percent
-    mem_t = get_readable_file_size(memory.total)
-    mem_a = get_readable_file_size(memory.available)
     sent = get_readable_file_size(net_io_counters().bytes_sent)
     recv = get_readable_file_size(net_io_counters().bytes_recv)
-    cpuUsage = cpu_percent(interval=0.5)
-    stats = "Bot Statistics"
-    stats += f"""
+    cpuUsage = cpu_percent(interval=10)
+    stats = f"""
+CPU:  {progress_bar(cpuUsage)} {cpuUsage}%
+RAM: {progress_bar(mem_p)} {mem_p}%
+DISK: {progress_bar(disk)} {disk}%
+TOTAL: {disk_t} | FREE: {disk_f}
 
-Bot Uptime: {currentTime}
-T-DN: {recv} | T-UP: {sent}
-CPU: [{progress_bar(cpuUsage)}] {cpuUsage}%
-RAM: [{progress_bar(mem_p)}] {mem_p}%
-FREE: {mem_a} | TOTAL: {mem_t}
-
-DISK: [{progress_bar(disk)}] {disk}%
-FREE: {disk_f} | TOTAL: {disk_t}
-DL: {recv} | UP: {sent}
+T-DL: {recv} | T-UL: {sent}
+Working For: {currentTime}
 
 Made with ❤️ by Dawn
 """
@@ -454,6 +449,4 @@ Made with ❤️ by Dawn
 
 dispatcher.add_handler(CallbackQueryHandler(refresh, pattern=f"^{str(ONE)}$"))
 dispatcher.add_handler(CallbackQueryHandler(close, pattern=f"^{str(TWO)}$"))
-dispatcher.add_handler(
-    CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$")
-)
+dispatcher.add_handler(CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$"))
