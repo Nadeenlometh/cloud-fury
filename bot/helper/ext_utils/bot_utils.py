@@ -407,7 +407,7 @@ def pop_up_stats(update, context):
     query.answer(text=stats, show_alert=True)
 
 def get_cpu_bar_string(psutil):
-    used = int(psutil.cpu_percent())
+    used = psutil.cpu_percent()
     total = 100
     p = 0 if total == 0 else round(used * 100 / total)
     p = min(max(p, 0), 100)
