@@ -433,8 +433,9 @@ def bot_sys_stats():
     recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     cpuUsage = cpu_percent(interval=1)
-    stats = f"\n<b> BOT SYSTEM STATS </b>"
-    stats += f"""
+    stats = f"""
+{TITLE_NAME} BOT SYSTEM STATS
+
 CPU:  {progress_bar(cpuUsage)} {cpuUsage}%
 RAM: {progress_bar(mem_p)} {mem_p}%
 DISK: {progress_bar(disk)} {disk}%
@@ -444,7 +445,9 @@ Working For: {currentTime}
 T-DL: {recv} | T-UL: {sent}
 
 Made with ❤️ by Dawn
-"""
+""" 
+#---Thanks for deleting my name ❤️ Appreciate it---#
+#---Remove this line too, who cares---#
     return stats
 
 dispatcher.add_handler(CallbackQueryHandler(refresh, pattern=f"^{str(ONE)}$"))
