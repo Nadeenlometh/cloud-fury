@@ -430,13 +430,11 @@ def bot_sys_stats():
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     stats = "Bot Statistics"
     stats += f"""
-CPU:  {get_stats_bar_string(cpu)}
-RAM: {get_stats_bar_string(mem)}
-DISK: {get_stats_bar_string(disk)}
 Bot Uptime: {currentTime}
+CPU:   {get_stats_bar_string(cpu)}
+RAM:  {get_stats_bar_string(mem)}
+DISK: {get_stats_bar_string(disk)}
 T-DN: {recv} | T-UP: {sent}
-Disk: {total} | Free: {free}
-Used: {used} [{disk}%]
 
 Made with ❤️ by Dawn
 """
