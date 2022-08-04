@@ -441,7 +441,6 @@ DISK: {progress_bar(disk)} {disk}%
 TOTAL: {disk_t}GB | FREE: {disk_f}GB
 Working For: {currentTime}
 T-DL: {recv} | T-UL: {sent}
-Made with ❤️ by Dawn
 """
     return stats
 
