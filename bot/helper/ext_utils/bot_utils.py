@@ -413,7 +413,7 @@ def get_cpu_bar_string(psutil):
     p = min(max(p, 0), 100)
     cFull = p // 8
     p_str = '⬢' * cFull
-    p_str += '⬡' * (14 - cFull)
+    p_str += '⬡' * (12 - cFull)
     p_str = f"〘{p_str}〙"
     return p_str
 
