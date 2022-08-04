@@ -410,6 +410,7 @@ def get_cpu_bar_string():
     used = int(psutil.cpu_percent())
     total = 100
     p = 0 if total == 0 else round(used * 100 / total)
+    p = min(max(p, 0), 100)
     cFull = p // 8
     p_str = '⬢' * cFull
     p_str += '⬡' * (12 - cFull)
