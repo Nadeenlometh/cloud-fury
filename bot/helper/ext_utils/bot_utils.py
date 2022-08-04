@@ -421,10 +421,11 @@ def bot_sys_stats():
     stats += f"""
 
 Bot Uptime: {currentTime}
+
+CPU:  {get_progress_bar_string(cpu)}
+RAM:  {get_progress_bar_string(mem)}
+Disk: {get_progress_bar_string(disk)}
 T-DN: {recv} | T-UP: {sent}
-CPU: {cpu}% | RAM: {mem}%
-Disk: {total} | Free: {free}
-Used: {used} [{disk}%]
 
 Made with ❤️ by Dawn
 """
@@ -432,6 +433,4 @@ Made with ❤️ by Dawn
 
 dispatcher.add_handler(CallbackQueryHandler(refresh, pattern=f"^{str(ONE)}$"))
 dispatcher.add_handler(CallbackQueryHandler(close, pattern=f"^{str(TWO)}$"))
-dispatcher.add_handler(
-    CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$")
-)
+dispatcher.add_handler(CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$"))
