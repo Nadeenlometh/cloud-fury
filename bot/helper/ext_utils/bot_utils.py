@@ -409,13 +409,9 @@ def pop_up_stats(update, context):
 
 def bot_sys_stats():
     currentTime = get_readable_time(time() - botStartTime)
-    with tqdm(total=100, desc='cpu%', position=1) as cpubar, tqdm(total=100, desc='ram%', position=0) as rambar:
-        while True:
-            rambar.n=psutil.virtual_memory().percent
-            cpubar.n=psutil.cpu_percent()
-            rambar.refresh()
-            cpubar.refresh()
-            sleep(0.5)
+    with tqdm(total=100, position=0) as cpubar, tqdm(total=100, position=1) as rambar:
+            cpubar = psutil.cpu_percent()
+            rambar = psutil.virtual_memory().percent
     cpu = psutil.cpu_percent()
     mem = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
