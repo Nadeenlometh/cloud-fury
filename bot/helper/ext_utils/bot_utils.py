@@ -124,6 +124,23 @@ def get_progress_bar_string(status):
     p_str = f"〘{p_str}〙"
     return p_str
 
+def progress_bar(percentage):
+    comp = '⬢'
+    ncomp = '⬡'
+    pr = ''
+    if isinstance(percentage, str):
+        return 'NaN'
+    try:
+        percentage=int(percentage)
+    except:
+        percentage = 0
+    for i in range(1,11):
+        if i <= int(percentage/10):
+            pr += comp
+        else:
+            pr += ncomp
+    return pr
+
 def auto_delete_message(bot, cmd_message: Message, bot_message: Message):
     if AUTO_DELETE_MESSAGE_DURATION != -1:
         sleep(AUTO_DELETE_MESSAGE_DURATION)
@@ -408,23 +425,28 @@ def pop_up_stats(update, context):
 
 def bot_sys_stats():
     currentTime = get_readable_time(time() - botStartTime)
-    cpu = psutil.cpu_percent()
-    mem = psutil.virtual_memory().percent
-    disk = psutil.disk_usage("/").percent
-    total, used, free = shutil.disk_usage(".")
-    total = get_readable_file_size(total)
-    used = get_readable_file_size(used)
-    free = get_readable_file_size(free)
-    recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
-    sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
+    total, used, free, disk = disk_usage('/')
+    disk_t = get_readable_file_size(total)
+    disk_f = get_readable_file_size(free)
+    memory = virtual_memory()
+    mem_p = memory.percent
+    mem_t = get_readable_file_size(memory.total)
+    mem_a = get_readable_file_size(memory.available)
+    sent = get_readable_file_size(net_io_counters().bytes_sent)
+    recv = get_readable_file_size(net_io_counters().bytes_recv)
+    cpuUsage = cpu_percent(interval=0.5)
     stats = "Bot Statistics"
     stats += f"""
 
 Bot Uptime: {currentTime}
 T-DN: {recv} | T-UP: {sent}
-CPU: {cpu}% | RAM: {mem}%
-Disk: {total} | Free: {free}
-Used: {used} [{disk}%]
+CPU: [{progress_bar(cpuUsage)}] {cpuUsage}%
+RAM: [{progress_bar(mem_p)}] {mem_p}%
+FREE: {mem_a} | TOTAL: {mem_t}
+
+DISK: [{progress_bar(disk)}] {disk}%
+FREE: {disk_f} | TOTAL: {disk_t}
+DL: {recv} | UP: {sent}
 
 Made with ❤️ by Dawn
 """
