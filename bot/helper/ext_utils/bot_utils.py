@@ -406,32 +406,25 @@ def pop_up_stats(update, context):
     stats = bot_sys_stats()
     query.answer(text=stats, show_alert=True)
 
-def get_stats_bar_string(psutil):
-    used = psutil / 8
-    total = 100 / 8
-    p = 0 if total == 0 else round(used * 100 / total)
-    p = min(max(p, 0), 100)
-    cFull = p // 8
-    p_str = '⬢' * cFull
-    p_str += '⬡' * (12 - cFull)
-    p_str = f"〘{p_str}〙"
-    return p_str
-
 def bot_sys_stats():
     currentTime = get_readable_time(time() - botStartTime)
     cpu = psutil.cpu_percent()
     mem = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
+    total, used, free = shutil.disk_usage(".")
+    total = get_readable_file_size(total)
+    used = get_readable_file_size(used)
+    free = get_readable_file_size(free)
     recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     stats = "Bot Statistics"
     stats += f"""
 
 Bot Uptime: {currentTime}
-CPU:  {get_stats_bar_string(cpu)}
-RAM: {get_stats_bar_string(mem)}
-DISK: {get_stats_bar_string(disk)}
 T-DN: {recv} | T-UP: {sent}
+CPU: {cpu}% | RAM: {mem}%
+Disk: {total} | Free: {free}
+Used: {used} [{disk}%]
 
 Made with ❤️ by Dawn
 """
@@ -439,4 +432,6 @@ Made with ❤️ by Dawn
 
 dispatcher.add_handler(CallbackQueryHandler(refresh, pattern=f"^{str(ONE)}$"))
 dispatcher.add_handler(CallbackQueryHandler(close, pattern=f"^{str(TWO)}$"))
-dispatcher.add_handler(CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$"))
+dispatcher.add_handler(
+    CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$")
+)
