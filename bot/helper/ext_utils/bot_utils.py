@@ -426,6 +426,7 @@ def bot_sys_stats():
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     stats = "Bot Statistics"
     stats += f"""
+
 Bot Uptime: {currentTime}
 CPU:  {get_stats_bar_string(cpu)}
 RAM: {get_stats_bar_string(mem)}
