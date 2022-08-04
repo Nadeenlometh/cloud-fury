@@ -413,7 +413,7 @@ def get_cpu_bar_string():
     p = min(max(p, 0), 100)
     cFull = p // 8
     p_str = '⬢' * cFull
-    p_str += '⬡' * (12 - cFull)
+    p_str += '⬡' * (8 - cFull)
     p_str = f"〘{p_str}〙"
     return p_str
 
@@ -436,6 +436,7 @@ T-DN: {recv} | T-UP: {sent}
 CPU: {cpu}% | RAM: {mem}%
 Disk: {total} | Free: {free}
 Used: {used} [{disk}%]
+
 Made with ❤️ by Dawn
 """
     return stats
