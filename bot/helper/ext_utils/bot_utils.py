@@ -408,7 +408,7 @@ def pop_up_stats(update, context):
 
 def get_cpu_bar_string(psutil):
     used = psutil.cpu_percent()
-    total = 100
+    total = 1000
     p = 0 if total == 0 else round(used * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
