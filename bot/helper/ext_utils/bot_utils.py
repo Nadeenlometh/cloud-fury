@@ -431,8 +431,8 @@ def bot_sys_stats():
     disk_f = get_readable_file_size(free)
     memory = virtual_memory()
     mem_p = memory.percent
-    sent = get_readable_file_size(net_io_counters().bytes_sent)
-    recv = get_readable_file_size(net_io_counters().bytes_recv)
+    recv = get_readable_file_size(psutil.net_io_counters().bytes_recv)
+    sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     cpuUsage = cpu_percent(interval=10)
     stats = f"""
 CPU:  {progress_bar(cpuUsage)} {cpuUsage}%
