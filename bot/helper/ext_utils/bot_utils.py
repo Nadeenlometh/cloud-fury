@@ -406,18 +406,7 @@ def pop_up_stats(update, context):
     stats = bot_sys_stats()
     query.answer(text=stats, show_alert=True)
 
-def get_cpu_bar_string(psutil):
-    used = psutil / 8
-    total = 100 / 8
-    p = 0 if total == 0 else round(used * 100 / total)
-    p = min(max(p, 0), 100)
-    cFull = p // 8
-    p_str = '⬢' * cFull
-    p_str += '⬡' * (12 - cFull)
-    p_str = f"〘{p_str}〙"
-    return p_str
-
-def get_mem_bar_string(psutil):
+def get_stats_bar_string(psutil):
     used = psutil / 8
     total = 100 / 8
     p = 0 if total == 0 else round(used * 100 / total)
@@ -441,8 +430,9 @@ def bot_sys_stats():
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     stats = "Bot Statistics"
     stats += f"""
-CPU: {get_cpu_bar_string(cpu)}
-RAM: {get_mem_bar_string(mem)}
+CPU:  {get_stats_bar_string(cpu)}
+RAM: {get_stats_bar_string(mem)}
+DISK: {get_stats_bar_string(disk)}
 Bot Uptime: {currentTime}
 T-DN: {recv} | T-UP: {sent}
 Disk: {total} | Free: {free}
