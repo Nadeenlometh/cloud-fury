@@ -439,9 +439,8 @@ CPU:  {progress_bar(cpuUsage)} {cpuUsage}%
 RAM: {progress_bar(mem_p)} {mem_p}%
 DISK: {progress_bar(disk)} {disk}%
 TOTAL: {disk_t} | FREE: {disk_f}
-
-T-DL: {recv} | T-UL: {sent}
 Working For: {currentTime}
+T-DL: {recv} | T-UL: {sent}
 
 Made with ❤️ by Dawn
 """
