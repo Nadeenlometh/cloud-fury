@@ -139,7 +139,6 @@ def progress_bar(percentage):
             s_progress += p_used
         else:
             s_progress += p_total
-        s_progress = f"〘{s_progress}〙"
     return s_progress
 
 def auto_delete_message(bot, cmd_message: Message, bot_message: Message):
