@@ -10,6 +10,7 @@ from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.button_build import ButtonMaker
 import shutil
 import psutil
+from tqdm import tqdm
 from psutil import virtual_memory, cpu_percent, disk_usage
 from telegram import InlineKeyboardMarkup
 from telegram.error import RetryAfter
@@ -408,6 +409,13 @@ def pop_up_stats(update, context):
 
 def bot_sys_stats():
     currentTime = get_readable_time(time() - botStartTime)
+    with tqdm(total=100, desc='cpu%', position=1) as cpubar, tqdm(total=100, desc='ram%', position=0) as rambar:
+        while True:
+            rambar.n=psutil.virtual_memory().percent
+            cpubar.n=psutil.cpu_percent()
+            rambar.refresh()
+            cpubar.refresh()
+            sleep(0.5)
     cpu = psutil.cpu_percent()
     mem = psutil.virtual_memory().percent
     disk = psutil.disk_usage("/").percent
@@ -419,7 +427,7 @@ def bot_sys_stats():
     sent = get_readable_file_size(psutil.net_io_counters().bytes_sent)
     stats = "Bot Statistics"
     stats += f"""
-
+f: {rambar}
 Bot Uptime: {currentTime}
 T-DN: {recv} | T-UP: {sent}
 CPU: {cpu}% | RAM: {mem}%
@@ -432,6 +440,4 @@ Made with ❤️ by Dawn
 
 dispatcher.add_handler(CallbackQueryHandler(refresh, pattern=f"^{str(ONE)}$"))
 dispatcher.add_handler(CallbackQueryHandler(close, pattern=f"^{str(TWO)}$"))
-dispatcher.add_handler(
-    CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$")
-)
+dispatcher.add_handler(CallbackQueryHandler(pop_up_stats, pattern=f"^{str(THREE)}$"))
